@@ -98,7 +98,7 @@ module.exports = {
           `├── Usage\n` +
           `│ ${usage}\n` +
           `├── Notes\n` +
-          `│ The content inside <HASAN> can be changed\n` +
+          `│ The content inside <REXY> can be changed\n` +
           `│ The content inside [a|b|c] is a or b or c\n` +
           `╰━━━━━━━❖`;
 
