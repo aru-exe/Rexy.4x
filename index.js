@@ -18,21 +18,30 @@
  */
 
 const { spawn } = require("child_process");
+const http = require("http");
 const log = require("./logger/log.js");
 
-function startProject() {
-	const child = spawn("node", ["Goat.js"], {
-		cwd: __dirname,
-		stdio: "inherit",
-		shell: true
-	});
+// Simple server to show "Server is running" on localhost:8000
+http.createServer((req, res) => {
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.end("<h1>Server is running</h1>");
+}).listen(8000, () => {
+    log.info("HTTP Server running on http://localhost:8000");
+});
 
-	child.on("close", (code) => {
-		if (code == 2) {
-			log.info("Restarting Project...");
-			startProject();
-		}
-	});
+function startProject() {
+    const child = spawn("node", ["Goat.js"], {
+        cwd: __dirname,
+        stdio: "inherit",
+        shell: true
+    });
+
+    child.on("close", (code) => {
+        if (code === 2) {
+            log.info("Restarting Project...");
+            startProject();
+        }
+    });
 }
 
 startProject();
